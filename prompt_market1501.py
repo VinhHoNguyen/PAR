@@ -19,7 +19,7 @@ CHECKPOINT_DIR = '/content/drive/MyDrive/PromptPAR_checkpoints/Vit_Market1501'
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 os.makedirs('/data/jinjiandong', exist_ok=True)
 
-print(f"✅ Checkpoint dir: {CHECKPOINT_DIR}")
+print(f" Checkpoint dir: {CHECKPOINT_DIR}")
 
 # Commented out IPython magic to ensure Python compatibility.
 # ╔══════════════════════════════════════════════════════════════╗
@@ -35,13 +35,13 @@ import shutil
 if os.path.exists('/content/OpenPAR'):
     shutil.rmtree('/content/OpenPAR')
 ! git clone https://github.com/Event-AHU/OpenPAR.git
-print("✅ Cloned OpenPAR")
+print(" Cloned OpenPAR")
 
 # Clone Market-1501 Attributes
 if os.path.exists('/content/Market-1501_Attribute'):
     shutil.rmtree('/content/Market-1501_Attribute')
 !git clone https://github.com/vana77/Market-1501_Attribute.git
-print("✅ Cloned Market-1501_Attribute")
+print(" Cloned Market-1501_Attribute")
 
 # Verify
 !ls -la /content/
@@ -56,7 +56,7 @@ print("✅ Cloned Market-1501_Attribute")
 ! pip install -q ftfy regex tqdm easydict scipy
 !pip install -q git+https://github.com/openai/CLIP.git
 
-print("\n✅ Dependencies installed")
+print("\n Dependencies installed")
 
 # Commented out IPython magic to ensure Python compatibility.
 # ╔══════════════════════════════════════════════════════════════╗
@@ -70,14 +70,14 @@ os.makedirs('/content/data', exist_ok=True)
 
 # Tải Market-1501
 if not os.path. exists('/content/data/Market-1501-v15.09.15'):
-    print("🔄 Đang tải Market-1501...")
+    print(" Đang tải Market-1501...")
     !pip install -q gdown
     !gdown "https://drive.google.com/uc?id=0B8-rUzbwVRk0c054eEozWG9COHM" -O Market-1501-v15.09.15.zip --fuzzy
     !unzip -q Market-1501-v15.09.15.zip
     !rm Market-1501-v15.09.15. zip
-    print("✅ Đã tải và giải nén Market-1501")
+    print(" Đã tải và giải nén Market-1501")
 else:
-    print("✅ Market-1501 đã tồn tại")
+    print(" Market-1501 đã tồn tại")
 
 ! ls -la /content/data/Market-1501-v15.09.15/
 
@@ -97,9 +97,9 @@ if not os.path.exists(vit_path):
 
 if os.path.exists(vit_path):
     size = os.path.getsize(vit_path) / 1024 / 1024
-    print(f"✅ ViT pretrained: {size:.1f} MB")
+    print(f" ViT pretrained: {size:.1f} MB")
 else:
-    print("❌ Tải ViT thất bại!")
+    print(" Tải ViT thất bại!")
 
 # Commented out IPython magic to ensure Python compatibility.
 # ╔══════════════════════════════════════════════════════════════╗
@@ -114,7 +114,7 @@ import shutil
 if os.path.exists('/content/OpenPAR'):
     shutil.rmtree('/content/OpenPAR')
 ! git clone -q https://github.com/Event-AHU/OpenPAR.git
-print("✅ Cloned fresh OpenPAR")
+print("Cloned fresh OpenPAR")
 
 # ========== 1. SỬA clip/model.py ==========
 model_py = '/content/OpenPAR/PromptPAR/clip/model.py'
@@ -136,7 +136,7 @@ for line in lines:
 with open(model_py, 'w') as f:
     f. writelines(new_lines)
 
-print("✅ Đã sửa clip/model.py")
+print(" Đã sửa clip/model.py")
 
 # ========== 2. SỬA dataset/AttrDataset.py ==========
 attr_py = '/content/OpenPAR/PromptPAR/dataset/AttrDataset.py'
@@ -159,18 +159,18 @@ content = content. replace(
 with open(attr_py, 'w') as f:
     f.write(content)
 
-print("✅ Đã sửa dataset/AttrDataset.py")
+print(" Đã sửa dataset/AttrDataset.py")
 
 # ========== VERIFY ==========
-print("\n📋 Verify model.py:")
+print("\n Verify model.py:")
 with open(model_py, 'r') as f:
     for i, line in enumerate(f, 1):
         if 'datasets_attrnum' in line:
             print(f"   Line {i}: {line.strip()[:70]}...")
             if "'Market1501':27" in line:
-                print("   ✅ Market1501 = 27 attributes")
+                print("    Market1501 = 27 attributes")
             else:
-                print("   ❌ Chưa đúng!")
+                print("    Chưa đúng!")
             break
 
 # ╔══════════════════════════════════════════════════════════════╗
@@ -183,7 +183,7 @@ with open(model_py, 'r') as f:
     content = f.read()
 
 # Hiển thị trước khi sửa
-print("🔍 TRƯỚC KHI SỬA:")
+print(" TRƯỚC KHI SỬA:")
 for line in content.split('\n')[13:19]:
     print(f"   {line[:80]}")
 
@@ -202,13 +202,13 @@ replacements = [
 for old, new in replacements:
     if old in content:
         content = content. replace(old, new)
-        print(f"\n✅ Đã thay thế pattern")
+        print(f"\n Đã thay thế pattern")
 
 with open(model_py, 'w') as f:
     f.write(content)
 
 # Hiển thị sau khi sửa
-print("\n🔍 SAU KHI SỬA:")
+print("\n SAU KHI SỬA:")
 with open(model_py, 'r') as f:
     content = f.read()
 for line in content.split('\n')[13:19]:
@@ -216,9 +216,9 @@ for line in content.split('\n')[13:19]:
 
 # Verify
 if "'Market1501':27" in content:
-    print("\n✅ OK!  Market1501 = 27")
+    print("\n OK!  Market1501 = 27")
 else:
-    print("\n❌ Chưa sửa được!  Cần sửa thủ công")
+    print("\n Chưa sửa được!  Cần sửa thủ công")
 
 # ╔══════════════════════════════════════════════════════════════╗
 # ║  CELL 8: TẠO DATASET PICKLE CHO MARKET1501                   ║
@@ -237,12 +237,12 @@ ATTR_FILE = '/content/Market-1501_Attribute/market_attribute.mat'
 SAVE_DIR = '/content/data/Market1501'
 
 # ========== CHECK FILES ==========
-print("🔍 Kiểm tra files...")
+print("Kiểm tra files...")
 if not os.path. exists(MARKET_DIR):
-    raise Exception("❌ Chưa có Market-1501!  Chạy Cell 5 trước.")
+    raise Exception("Chưa có Market-1501!  Chạy Cell 5 trước.")
 if not os.path. exists(ATTR_FILE):
-    raise Exception("❌ Chưa có market_attribute.mat! Chạy Cell 3 trước.")
-print("✅ Files OK")
+    raise Exception("Chưa có market_attribute.mat! Chạy Cell 3 trước.")
+print("Files OK")
 
 # ========== LOAD . MAT FILE ==========
 mat_data = scipy. io.loadmat(ATTR_FILE)
@@ -263,8 +263,8 @@ train_images = sorted([f for f in os. listdir(train_dir)
 test_images = sorted([f for f in os. listdir(test_dir)
                      if f.endswith('.jpg') and not f.startswith('-1') and not f.startswith('0000')])
 
-print(f"🖼️ Train images: {len(train_images)}")
-print(f"🖼️ Test images: {len(test_images)}")
+print(f"Train images: {len(train_images)}")
+print(f"Test images: {len(test_images)}")
 
 # ========== CREATE DATASET ==========
 image_name_list = []
@@ -274,7 +274,7 @@ test_idx = []
 idx = 0
 
 # Process TRAINING images
-print("\n🔄 Processing training images...")
+print("\n Processing training images...")
 for img_name in train_images:
     try:
         identity_id = int(img_name.split('_')[0])
@@ -289,10 +289,10 @@ for img_name in train_images:
             idx += 1
     except:
         continue
-print(f"   ✅ Train samples: {len(train_idx)}")
+print(f" Train samples: {len(train_idx)}")
 
 # Process TEST images
-print("🔄 Processing test images...")
+print(" Processing test images...")
 for img_name in test_images:
     try:
         identity_id = int(img_name.split('_')[0])
@@ -307,7 +307,7 @@ for img_name in test_images:
             idx += 1
     except:
         continue
-print(f"   ✅ Test samples: {len(test_idx)}")
+print(f" Test samples: {len(test_idx)}")
 
 # ========== CREATE EASYDICT ==========
 dataset = EasyDict()
@@ -337,30 +337,30 @@ os.makedirs(SAVE_DIR)
 pkl_path = os.path. join(SAVE_DIR, 'pad. pkl')
 with open(pkl_path, 'wb') as f:
     pickle.dump(dataset, f)
-print(f"\n✅ Saved: {pkl_path}")
+print(f"\n Saved: {pkl_path}")
 
 os.symlink(train_dir, os. path.join(SAVE_DIR, 'bounding_box_train'))
 os.symlink(test_dir, os. path.join(SAVE_DIR, 'bounding_box_test'))
-print("✅ Created symlinks")
+print("Created symlinks")
 
 # ========== VERIFY ==========
 print("\n" + "=" * 60)
-print("📋 DATASET SUMMARY")
+print(" DATASET SUMMARY")
 print("=" * 60)
-print(f"✅ Labels shape: {dataset. label.shape}")
-print(f"✅ Attributes: {len(dataset. attributes)}")
-print(f"✅ Train: {len(dataset.partition. train)}")
-print(f"✅ Test: {len(dataset.partition. test)}")
+print(f"Labels shape: {dataset. label.shape}")
+print(f"Attributes: {len(dataset. attributes)}")
+print(f"Train: {len(dataset.partition. train)}")
+print(f"Test: {len(dataset.partition. test)}")
 
 # Verify file exists
 if os.path.exists(pkl_path):
     size = os.path. getsize(pkl_path) / 1024 / 1024
-    print(f"✅ pad.pkl: {size:.2f} MB")
+    print(f"pad.pkl: {size:.2f} MB")
 
 if len(dataset.attributes) == dataset.label.shape[1]:
-    print(f"\n🎉 OK!  attributes = labels = {len(dataset.attributes)}")
+    print(f"\n OK!  attributes = labels = {len(dataset.attributes)}")
 else:
-    print(f"\n❌ MISMATCH!")
+    print(f"\n MISMATCH!")
 
 # ╔══════════════════════════════════════════════════════════════╗
 # ║  TẠO PAD.PKL                                                 ║
@@ -391,7 +391,7 @@ test_attr_mat = market_attr['test'][0][0]
 
 # Lấy 27 attributes từ . mat
 attr_names = [name for name in train_attr_mat.dtype.names if name != 'image_index']
-print(f"📊 Attributes: {len(attr_names)}")
+print(f"Attributes: {len(attr_names)}")
 
 # ========== GET IMAGE LISTS ==========
 train_dir = os.path. join(MARKET_DIR, 'bounding_box_train')
@@ -402,7 +402,7 @@ train_images = sorted([f for f in os.listdir(train_dir)
 test_images = sorted([f for f in os. listdir(test_dir)
                      if f.endswith('.jpg') and not f.startswith('-1') and not f.startswith('0000')])
 
-print(f"🖼️ Train: {len(train_images)}, Test: {len(test_images)}")
+print(f"Train: {len(train_images)}, Test: {len(test_images)}")
 
 # ========== CREATE DATASET ==========
 image_name_list = []
@@ -439,7 +439,7 @@ for img_name in test_images:
     except:
         continue
 
-print(f"✅ Train: {len(train_idx)}, Test: {len(test_idx)}")
+print(f" Train: {len(train_idx)}, Test: {len(test_idx)}")
 
 # ========== CREATE EASYDICT ==========
 dataset = EasyDict()
@@ -474,31 +474,86 @@ os.symlink(test_dir, os. path.join(SAVE_DIR, 'bounding_box_test'))
 print("\n" + "=" * 60)
 if os.path.exists(pkl_path):
     size = os.path. getsize(pkl_path) / 1024 / 1024
-    print(f"✅ CREATED: {pkl_path} ({size:.2f} MB)")
-    print(f"✅ Labels: {dataset.label.shape}")
-    print(f"✅ Attributes: {len(dataset.attributes)}")
-    print(f"\n🎉 THÀNH CÔNG! Chạy Cell 10 để training")
+    print(f"CREATED: {pkl_path} ({size:.2f} MB)")
+    print(f"Labels: {dataset.label.shape}")
+    print(f"Attributes: {len(dataset.attributes)}")
+    print(f"\n THÀNH CÔNG! Chạy Cell 10 để training")
 else:
-    print("❌ THẤT BẠI!")
+    print("THẤT BẠI!")
 
-# ╔══════════════════════════════════════════════════════════════╗
-# ║  CELL 9: TRAINING CONFIGURATION                              ║
-# ╚══════════════════════════════════════════════════════════════╝
+# --- PATCH: lưu checkpoint thẳng vào Drive, không dùng timestamp ---
 
-# ==================== THAY ĐỔI Ở ĐÂY ====================
-EPOCHS = 30              # Test: 3 | Chạy thật: 30
-BATCH_SIZE = 16
-SAVE_FREQ = 5           # Lưu checkpoint mỗi N epoch
-# ========================================================
+train_py = "/content/OpenPAR/PromptPAR/train.py"
 
-print("=" * 60)
-print("📋 TRAINING CONFIGURATION")
-print("=" * 60)
-print(f"  Epochs:         {EPOCHS}")
-print(f"  Batch size:     {BATCH_SIZE}")
-print(f"  Save frequency: Every {SAVE_FREQ} epoch(s)")
-print(f"  Checkpoint:     /content/drive/MyDrive/PromptPAR_checkpoints/Vit_Market1501")
-print("=" * 60)
+with open(train_py, "r") as f:
+    code = f.read()
+
+# Block cũ dùng timestamp
+old = """start_time=time_str()
+    print(f'start_time is {start_time}')
+    log_dir = os.path.join('logs', args.dataset)
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    log_dir = os.path.join(log_dir, start_time)
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)"""
+
+# Block mới: lấy đường dẫn từ --dir
+new = """log_dir = args.dir
+    os.makedirs(log_dir, exist_ok=True)"""
+
+# Thay thế
+code = code.replace(old, new)
+
+with open(train_py, "w") as f:
+    f.write(code)
+
+print("train.py đã được chỉnh để lưu vào Drive")
+
+# PATCH: thêm resume logic vào train.py (ngắn gọn)
+
+train_py = "/content/OpenPAR/PromptPAR/train.py"
+
+with open(train_py, "r") as f:
+    code = f.read()
+
+if "torch.load" not in code:
+    print("Đang thêm logic resume...")
+
+    code = code.replace(
+        "model = TransformerClassifier(clip_model,train_set.attr_num,train_set.attributes)",
+        """model = TransformerClassifier(clip_model,train_set.attr_num,train_set.attributes)
+
+    # ---- AUTO RESUME ----
+    start_epoch = 1
+    if args.checkpoint:
+        import glob
+        ckpts = glob.glob(os.path.join(args.dir, "epoch*.pth"))
+        if ckpts:
+            latest = max(ckpts, key=os.path.getctime)
+            print("Resume từ:", latest)
+            ckpt = torch.load(latest, map_location=device)
+            model.load_state_dict(ckpt["model_state_dict"])
+            clip_model.load_state_dict(ckpt["clip_model"])
+            try:
+                optimizer.load_state_dict(ckpt["optimizer"])
+            except:
+                pass
+            start_epoch = ckpt["epoch"] + 1
+    """
+    )
+
+    code = code.replace(
+        "for i in range(1, epoch+1):",
+        "for i in range(start_epoch, epoch+1):"
+    )
+
+    with open(train_py, "w") as f:
+        f.write(code)
+
+    print("Patch xong")
+else:
+    print("File đã có logic resume, bỏ qua")
 
 # Commented out IPython magic to ensure Python compatibility.
 # ╔══════════════════════════════════════════════════════════════╗
@@ -507,7 +562,7 @@ print("=" * 60)
 
 # %cd /content/OpenPAR/PromptPAR
 
-import os
+import os, glob
 
 # Tạo thư mục trong Drive
 CHECKPOINT_DIR = "/content/drive/MyDrive/PromptPAR_checkpoints/Vit_Market1501"
@@ -523,108 +578,47 @@ if os.path.exists(LOCAL_OUTPUT):
         shutil.rmtree(LOCAL_OUTPUT) # Remove directory
 os.symlink(CHECKPOINT_DIR, LOCAL_OUTPUT)
 
+# Tự động tìm checkpoint mới nhất để resume
+checkpoint_files = glob.glob(f"{CHECKPOINT_DIR}/*.pth")
+resume_arg = ""
+if checkpoint_files:
+    latest_ckpt = max(checkpoint_files, key=os.path.getctime)
+    print(f"Tìm thấy checkpoint mới nhất → tiếp tục từ: {os.path.basename(latest_ckpt)}")
+    resume_arg = f"--checkpoint"
+else:
+    print("Không có checkpoint → train từ đầu")
+
 print(f" Symlink: {LOCAL_OUTPUT} → {CHECKPOINT_DIR}")
 print(" Bắt đầu training.. .\n")
 
-!  python train.py Market1501 \
-    --batchsize 16 \
-    --epoch 30 \
-    --height 224 \
-    --width 224 \
-    --lr 8e-3 \
-    --weight_decay 1e-4 \
-    --clip_lr 4e-3 \
-    --clip_weight_decay 1e-4 \
-    --text_prompt 3 \
-    --vis_prompt 50 \
-    --vis_depth 24 \
-    --div_num 4 \
-    --overlap_row 2 \
-    --mm_layers 1 \
-    --smooth_param 0.1 \
-    --ag_threshold 0.5 \
-    --train_split trainval \
-    --valid_split test \
-    --save_freq 5 \
-    --use_div \
-    --use_textprompt \
-    --use_mm_former \
-    --use_GL \
-    --dir $CHECKPOINT_DIR
+cmd = f"""
+python train.py Market1501 \
+--batchsize 32 \
+--epoch 60 \
+--height 224 \
+--width 224 \
+--lr 5e-5 \
+--weight_decay 1e-4 \
+--clip_lr 1e-5 \
+--clip_weight_decay 1e-4 \
+--text_prompt 3 \
+--vis_prompt 20 \
+--vis_depth 12 \
+--div_num 4 \
+--overlap_row 2 \
+--mm_layers 1 \
+--smooth_param 0.1 \
+--ag_threshold 0.5 \
+--train_split trainval \
+--valid_split test \
+--save_freq 5 \
+--use_div \
+--use_textprompt \
+--use_mm_former \
+--use_GL \
+--dir {CHECKPOINT_DIR} \
+{resume_arg}
+"""
 
-# ╔══════════════════════════════════════════════════════════════╗
-# ║  CELL 11: KIỂM TRA CHECKPOINT                                ║
-# ╚══════════════════════════════════════════════════════════════╝
-
-import os
-import glob
-
-CHECKPOINT_DIR = "/content/drive/MyDrive/PromptPAR_checkpoints/Vit_Market1501"
-
-print("📁 Checkpoints đã lưu:")
-print("=" * 60)
-
-# Tìm trong Drive
-checkpoints = glob.glob(f'{CHECKPOINT_DIR}/**/*.pth', recursive=True)
-checkpoints += glob.glob(f'{CHECKPOINT_DIR}/*. pth')
-
-# Tìm trong local
-local_ckpts = glob.glob('/content/OpenPAR/PromptPAR/**/*.pth', recursive=True)
-
-if checkpoints:
-    print(f"✅ Google Drive ({len(checkpoints)} files):")
-    for ckpt in checkpoints:
-        size = os.path. getsize(ckpt) / 1024 / 1024
-        print(f"   📦 {os.path.basename(ckpt)} ({size:.1f} MB)")
-
-if local_ckpts:
-    print(f"\n📁 Local ({len(local_ckpts)} files):")
-    for ckpt in local_ckpts:
-        size = os. path.getsize(ckpt) / 1024 / 1024
-        print(f"   📦 {os.path.basename(ckpt)} ({size:.1f} MB)")
-
-    # Copy to Drive
-    import shutil
-    print("\n🔄 Copying to Drive...")
-    for ckpt in local_ckpts:
-        dest = os.path.join(CHECKPOINT_DIR, os.path.basename(ckpt))
-        shutil. copy(ckpt, dest)
-        print(f"   ✅ {os.path.basename(ckpt)}")
-
-if not checkpoints and not local_ckpts:
-    print("❌ Chưa có checkpoint nào!")
-
-# Commented out IPython magic to ensure Python compatibility.
-# ╔══════════════════════════════════════════════════════════════╗
-# ║  CELL 12: RESUME TRAINING (NẾU BỊ NGẮT)                      ║
-# ╚══════════════════════════════════════════════════════════════╝
-
-# ⚠️ UNCOMMENT VÀ CHẠY NẾU COLAB BỊ NGẮT
-# Trước tiên chạy Cell 1, 7, rồi chạy cell này
-
-
-# %cd /content/OpenPAR/PromptPAR
-
-import os
-CHECKPOINT_DIR = "/content/drive/MyDrive/PromptPAR_checkpoints/Vit_Market1501"
-
-! python train.py Market1501 \
-    --batchsize 16 \
-    --epoch 30 \
-    --height 224 \
-    --width 224 \
-    --lr 8e-3 \
-    --weight_decay 1e-4 \
-    --clip_lr 4e-3 \
-    --text_prompt 3 \
-    --vis_prompt 50 \
-    --vis_depth 24 \
-    --div_num 4 \
-    --save_freq 5 \
-    --use_div \
-    --use_textprompt \
-    --use_mm_former \
-    --checkpoint \
-    --dir $CHECKPOINT_DIR
-
-print("💡 Uncomment code trên và chạy nếu cần resume training")
+print(cmd)
+!{cmd}
